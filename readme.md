@@ -1,33 +1,29 @@
 ### API Gateway
 
-Infrastructure focused, no business logic, only communication towards the **Backend-For-Frontend**.
+Infrastructure focused, no business logic, protects and serves the bff's with requests from clients.
 
 #### Responsibilities:
 
 - Authentication / Authorization (JWT) enforcement.
 - Rate limiting / throttling.
-  - Configured with `1 min` window between each request and limited to `100 requests` each TCP client
+  - Configured with `1 min` window between each request and limited to `100 requests` each TCP client.
   - A simple test with `autocannon` configured with `--connections 5`, `--duration 15` and `--maxOverallRequests 250` shows the rate limiter blocking 100 of those requests: `100 2xx responses, 150 non 2xx responses`.
 - Request routing.
 - Basic request/response logging.
 - Versioning (`/v1`, `/v2`...).
 
-##### Infrastructure Logic
-
-Routes requests from clients to the correct BFF
-
 ##### Endpoints
 
-- GET /api/v1/web/catalog/\*\* - Catalog BFF for desktop
-- GET /api/v1/mobile/catalog/\*\* - Catalog BFF for mobile
+- GET /api/v1/web/products - Routes request to Products Catalog BFF for desktop clients
+- GET /api/v1/mobile/products - Routes request to Products Catalog BFF for mobile clients
 
-### Backend-for-frontend
+### Backend-for-frontends
 
-Business logic focused, adapts and transforms required data from microservices to the frontend.
+Business logic focused, adapts and transforms data from microservices to the frontend.
 
 #### Responsibilities:
 
-- Call microservices in parallel style.
+- Call their targeted microservices in parallel style.
 - Aggregate responses.
 - Shape data for the frontend.
 - Hide backend service details.
@@ -37,23 +33,23 @@ Business logic focused, adapts and transforms required data from microservices t
 
 ##### Business Logic
 
-Transforms and aggregates data from products for web clients, inventory and reviews microservices.
+Transforms and aggregates products, inventory and reviews data from microservices for desktop clients.
 
 ##### Endpoints
 
-- GET /catalog - Returns a list of products.
-- GET /catalog/:id - Returns one product.
+- GET /products - Returns a list of products tailored for desktop frontends.
+- GET /products/:id - Returns one product.
 
 #### Catalog Mobile BFF
 
 ##### Business Logic
 
-Transforms and aggregates data from products for mobile clients, inventory and reviews microservices.
+Transforms and aggregates products, inventory and reviews data from microservices for mobile clients.
 
 ##### Endpoints
 
-- GET /catalog - Returns a list of products.
-- GET /catalog/:id - Returns one product.
+- GET /products - Returns a list of products tailored for mobile frontends.
+- GET /products/:id - Returns one product.
 
 ##### BFF specific features
 
@@ -68,7 +64,7 @@ Each service owns its data and rules.
 - Product service owns product data.
 - Inventory service owns inventory data.
 - Each microservice is internally consistent.
-- No services reaches eachothers databases.
+- No services reaches eachothers data.
 - No service knows about the BFF or the API gateway and its logic.
 
 ### Architecture Design and Decision making questions
@@ -79,7 +75,7 @@ Each service owns its data and rules.
 
 #### Can I change inventory logic without breaking the UI?
 
-- Say the shape of the microservices API change, instead of adjusting to these changes from the frontend, we just work with the BFF to still return what the frontend expect.
+- Say the shape of one of the microservices API change, instead of adjusting to these changes from the frontend, we just work with the BFF to still return what the frontend expects.
 
 #### Can I add mobile suport with a new BFF?
 
@@ -89,23 +85,23 @@ Each service owns its data and rules.
 
 #### Can I add a new service without touching the gateway?
 
-- If there were to be a new service, we only need to deal with the BFF.
-- The gateway doesnt care what the BFF does as long as routing stays the same
-- The only time we should alter the gateway is if we need a new BFF (for a new category of microservices)
+- If there were to be a need for a new service, we only need to deal with the BFF business logic.
+- The gateway doesnt care what the BFF does as long as routing stays the same.
+- The only time we should alter the gateway is if we need a new BFF (for example, for a new category of microservices)
 
 #### Why not just call the BFF directly from the frontend?
 
-They serve different purposes, lets write out the differences:
+Because they serve different purposes:
 
 - **API Gateway**
-  - Acts a single entry point for clients to access multiple backend services
+  - Acts a single entry point for clients to access multiple backend services.
   - Centralizes request management, routing, monitoring and authentication/authorization
-  - Minimal complexity
-  - Doesn't care about client types
+  - Minimal complexity.
+  - Doesn't care about client types.
 - **Backend-for-frontend**
-  - Acts as a dedicated client-specific backend service (mobile app, tv app etc...)
-  - Middleman between the frontend and various microservices
-  - High complexity, aggregates data and fetches data in parallel style
+  - Acts as a dedicated client-specific backend service (mobile app, tv app etc...).
+  - Middleman between the frontend and various microservices.
+  - High complexity, aggregates data and fetches data in parallel style.
   - Has to know the client-specific needs
 
 At what point do we introduce a gateway then?
@@ -115,8 +111,6 @@ At what point do we introduce a gateway then?
   - **Authentication/authorization**: A BFF should only focus on business logic, auth should be separated.
   - **Monitoring**: We gain more insight about traffic behaviour from capturing and observing request/responses from a centralised service such as a gateway instead of every single BFF.
   - **Routing**: Incoming request should be directed to the appropiate BFF.
-
-**Worst case scenario** - The client calls the BFF and its not working, the bff crashed... what do we do? With a gateway the request can easily be routed to a more stable working copy of the same BFF.
 
 ### Architecture Diagram
 
