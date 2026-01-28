@@ -20,10 +20,10 @@ Make sure you have `Node` installed, this project required `Node v22`.
 2. Install root project dependencies with `npm install`
 3. Install microservice dependencies with `npm run build`
 4. Run all the services with `npm start`
-5. Test the API gateway endpoints from the browser:
+5. The API gateway runs on port `5000`, test the endpoints from the browser:
    ```
-   GET /api/v1/web/products - Routes request to Products Catalog BFF for desktop clients
-   GET /api/v1/mobile/products - Routes request to Products Catalog BFF for mobile clients
+   GET http://localhost:5000/api/v1/web/products - Routes request to Products Catalog BFF for desktop clients
+   GET http://localhost:5000/api/v1/mobile/products - Routes request to Products Catalog BFF for mobile clients
    ```
 
 ## API Gateway Pattern
