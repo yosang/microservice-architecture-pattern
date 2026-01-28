@@ -1,9 +1,22 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const prefix = "api";
 const version = "v1";
+const morgan = require("morgan");
+
+const { rateLimit } = require("express-rate-limit");
+const rateLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 min window between each request
+  limit: 100, // limited to 100 requests
+  message: { status: 429, error: "Too many requests" },
+  statusCode: 429,
+});
 
 app.use(express.json());
+app.use(cors());
+app.use(morgan("dev"));
+app.use(rateLimiter); // we can either use it globally or add it as a middleware to specific endpoints
 
 const services = {
   web: { port: 3003 }, // /web/products > 3003/products

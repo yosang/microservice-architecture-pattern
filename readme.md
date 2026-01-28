@@ -6,9 +6,20 @@ Infrastructure focused, no business logic, only communication towards the **Back
 
 - Authentication / Authorization (JWT) enforcement.
 - Rate limiting / throttling.
+  - Configured with `1 min` window between each request and limited to `100 requests` each TCP client
+  - A simple test with `autocannon` configured with `--connections 5`, `--duration 15` and `--maxOverallRequests 250` shows the rate limiter blocking 100 of those requests: `100 2xx responses, 150 non 2xx responses`.
 - Request routing.
 - Basic request/response logging.
 - Versioning (`/v1`, `/v2`...).
+
+##### Infrastructure Logic
+
+Routes requests from clients to the correct BFF
+
+##### Endpoints
+
+- GET /api/v1/web/catalog/\*\* - Catalog BFF for desktop
+- GET /api/v1/mobile/catalog/\*\* - Catalog BFF for mobile
 
 ### Backend-for-frontend
 
