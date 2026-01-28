@@ -1,3 +1,17 @@
+# Microservice Architecture Pattern
+
+Consists of an approach to building software as a collection of small, independent and loosely coupled services, each responsible for a specific business function.
+
+These services can be developed, deployed and scaled independently using communication protocls like (`REST`) to communicate with each other.
+
+This pattern enhances flexibility and allows teams to use different technology stacks for different services.
+
+**Core Principles**:
+
+- Each service can be scaled without affecting the rest of the system.
+- Each service manages its own database, which prevents data coupling.
+- Each service is developed around specific business logic.
+
 ### API Gateway
 
 Infrastructure focused, no business logic, protects and serves the bff's with requests from clients.
