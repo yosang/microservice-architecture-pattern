@@ -2,7 +2,7 @@
 
 Consists of an approach to building software as a collection of small, independent and loosely coupled services, each responsible for a specific business function.
 
-These services can be developed, deployed and scaled independently using communication protocls like (`REST`) to communicate with each other.
+These services can be developed, deployed and scaled independently using communication protocols like (`REST`) to communicate with each other.
 
 This pattern enhances flexibility and allows teams to use different technology stacks for different services.
 
@@ -12,7 +12,7 @@ This pattern enhances flexibility and allows teams to use different technology s
 - Each service manages its own database, which prevents data coupling.
 - Each service is developed around specific business logic.
 
-### API Gateway
+### API Gateway Pattern
 
 Infrastructure focused, no business logic, protects and serves the bff's with requests from clients.
 
@@ -20,7 +20,7 @@ Infrastructure focused, no business logic, protects and serves the bff's with re
 
 - Authentication / Authorization (JWT) enforcement.
 - Rate limiting / throttling.
-  - Configured with `1 min` window between each request and limited to `100 requests` each TCP client.
+  - **[autocannon](https://www.npmjs.com/package/autocannon)**: configured with `1 min` window between each request and limited to `100 requests` each TCP client.
   - A simple test with `autocannon` configured with `--connections 5`, `--duration 15` and `--maxOverallRequests 250` shows the rate limiter blocking 100 of those requests: `100 2xx responses, 150 non 2xx responses`.
 - Request routing.
 - Basic request/response logging.
@@ -31,7 +31,7 @@ Infrastructure focused, no business logic, protects and serves the bff's with re
 - GET /api/v1/web/products - Routes request to Products Catalog BFF for desktop clients
 - GET /api/v1/mobile/products - Routes request to Products Catalog BFF for mobile clients
 
-### Backend-for-frontends
+### Backend-for-frontends Pattern
 
 Business logic focused, adapts and transforms data from microservices to the frontend.
 
