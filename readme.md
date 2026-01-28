@@ -27,6 +27,8 @@ Make sure you have `Node` installed, this project requires `Node v22`.
    GET http://localhost:5000/api/v1/mobile/products/?offset=20&&limit=10 - Applies offset and limit queries
    ```
 
+The datasets used for this project is AI generated.
+
 ## API Gateway Pattern
 
 Infrastructure focused, no business logic, protects and serves the bff's with requests from clients.
