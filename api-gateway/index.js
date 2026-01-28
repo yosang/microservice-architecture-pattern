@@ -1,5 +1,7 @@
 const express = require("express");
 const app = express();
+const prefix = "api";
+const version = "v1";
 
 app.use(express.json());
 
@@ -12,7 +14,8 @@ const route = async (req, res, serviceName) => {
   const service = services[serviceName];
   if (!service) return res.status(404).json({ status: 404, result: "Service not found" });
 
-  const path = req.originalUrl.replace(`/${serviceName}`, "");
+  const path = req.originalUrl.replace(`/${prefix}/${version}/${serviceName}`, "");
+
   const headers = { ...req.headers };
   const url = `http://localhost:${service.port}${path}`;
   delete headers["content-length"];
@@ -40,7 +43,7 @@ const route = async (req, res, serviceName) => {
 };
 
 Object.keys(services).forEach((service) => {
-  app.use(`/${service}`, (req, res) => {
+  app.use(`/${prefix}/${version}/${service}`, (req, res) => {
     route(req, res, service);
   });
 });

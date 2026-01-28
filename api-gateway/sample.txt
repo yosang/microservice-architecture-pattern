@@ -1,4 +1,4 @@
-/api/v1/catalog/** - Catalog BFF
-/api/v1/cart/**    - Cart BFF
-/api/v1/orders/**  - Orders BFF
+/api/v1/web/catalog/** - Catalog BFF for desktop
+/api/v1/mobile/catalog/** - Catalog BFF for mobile
+
 
