@@ -7,9 +7,9 @@ app.use(compression());
 const cache = {};
 const cache_ttl = 300000;
 
-app.get("/catalog", async (req, res) => {
+app.get("/products", async (req, res) => {
   const cacheKey = "dataFetch";
-  let data = cache[cacheKey];
+  let data = getCache[cacheKey];
 
   if (!data || isCacheExpired(cacheKey)) {
     try {
@@ -24,7 +24,7 @@ app.get("/catalog", async (req, res) => {
   res.status(200).json({ status: 200, result: data });
 });
 
-app.get("/catalog/:id", async (req, res) => {
+app.get("/products/:id", async (req, res) => {
   const cacheKey = "dataFetch";
   let data = cache[cacheKey];
 
@@ -48,7 +48,7 @@ app.get("/catalog/:id", async (req, res) => {
 });
 
 // Add the ability to add data to the microservices
-// app.post("/catalog", () => {});
+// app.post("/products", () => {});
 
 // Cache helper functions
 function getCache(key) {
@@ -66,4 +66,5 @@ function isCacheExpired(key) {
   return Date.now() - cacheEntry.timestamp > cache_ttl;
 }
 
-app.listen(3004, () => console.log("Catalog Mobile BFF service is running on 3004"));
+app.use((req, res, next) => res.status(404).json({ status: 404, result: "Service not found" }));
+app.listen(3004, () => console.log("Products Catalog Mobile BFF service is running on 3004"));

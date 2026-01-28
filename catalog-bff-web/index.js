@@ -3,7 +3,7 @@ const app = express();
 const fetchAll = require("./fetchAll");
 app.use(express.json());
 
-app.get("/catalog", async (_, res) => {
+app.get("/products", async (_, res) => {
   try {
     const data = await fetchAll();
     res.status(200).json(data);
@@ -13,7 +13,7 @@ app.get("/catalog", async (_, res) => {
   }
 });
 
-app.get("/catalog/:id", async (req, res) => {
+app.get("/products/:id", async (req, res) => {
   try {
     const data = await fetchAll();
 
@@ -31,4 +31,6 @@ app.get("/catalog/:id", async (req, res) => {
 // Add the ability to add data to the microservices
 // app.post("/catalog", () => {});
 
-app.listen(3003, () => console.log("Catalog Web BFF service is running on 3003"));
+app.use((req, res, next) => res.status(404).json({status:404, result:"Service not found"}))
+
+app.listen(3003, () => console.log("Products Catalog Web BFF service is running on 3003"));
