@@ -1,15 +1,10 @@
 const express = require("express");
+const dataSet = require("./data.json");
 const app = express();
 
 app.use(express.json());
 
-const inventory = [
-  { productId: "sku-001", inStock: true, quantity: 42 },
-  { productId: "sku-002", inStock: true, quantity: 15 },
-  { productId: "sku-003", inStock: false, quantity: 0 },
-  { productId: "sku-004", inStock: true, quantity: 8 },
-  { productId: "sku-005", inStock: true, quantity: 27 },
-];
+const inventory = dataSet;
 
 app.get("/inventory", (req, res) => {
   res.json(inventory);

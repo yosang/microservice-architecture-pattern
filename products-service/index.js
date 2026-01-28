@@ -1,15 +1,10 @@
 const express = require("express");
+const dataSet = require("./data.json");
 const app = express();
 
 app.use(express.json());
 
-const products = [
-  { id: "sku-001", name: "Wireless Mouse", description: "Ergonomic wireless mouse", price: 29.99 },
-  { id: "sku-002", name: "Mechanical Keyboard", description: "RGB backlit keyboard", price: 79.99 },
-  { id: "sku-003", name: "USB-C Hub", description: "Multiport adapter for laptops", price: 49.99 },
-  { id: "sku-004", name: "Gaming Headset", description: "Surround sound, noise-cancelling mic", price: 59.99 },
-  { id: "sku-005", name: "Webcam HD", description: "1080p video streaming webcam", price: 39.99 },
-];
+const products = dataSet;
 
 app.get("/products", (req, res) => {
   res.json(products);

@@ -23,10 +23,7 @@ module.exports = async (req) => {
 
       return {
         ...product,
-        availability: {
-          inStock: item.inStock,
-          quantity: item.quantity,
-        },
+        inStock: item.inStock,
         ...review,
       };
     });

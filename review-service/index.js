@@ -1,15 +1,10 @@
 const express = require("express");
+const dataSet = require("./data.json");
 const app = express();
 
 app.use(express.json());
 
-const reviews = [
-  { productId: "sku-001", averageRating: 4.6 },
-  { productId: "sku-002", averageRating: 4.8 },
-  { productId: "sku-003", averageRating: 4.2 },
-  { productId: "sku-004", averageRating: 4.7 },
-  { productId: "sku-005", averageRating: 4.3 },
-];
+const reviews = dataSet;
 
 app.get("/reviews", (req, res) => {
   res.json(reviews);

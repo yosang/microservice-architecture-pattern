@@ -14,7 +14,7 @@ This pattern enhances flexibility and allows teams to use different technology s
 
 # Usage
 
-Make sure you have `Node` installed, this project required `Node v22`.
+Make sure you have `Node` installed, this project requires `Node v22`.
 
 1. Clone the project with `git clone https://github.com/yosang/microservice-architecture-pattern`
 2. Install root project dependencies with `npm install`
@@ -22,8 +22,9 @@ Make sure you have `Node` installed, this project required `Node v22`.
 4. Run all the services with `npm start`
 5. The API gateway runs on port `5000`, test the endpoints from the browser:
    ```
-   GET http://localhost:5000/api/v1/web/products - Routes request to Products Catalog BFF for desktop clients
-   GET http://localhost:5000/api/v1/mobile/products - Routes request to Products Catalog BFF for mobile clients
+   GET http://localhost:5000/api/v1/web/products - Retreives a list of products for desktop clients.
+   GET http://localhost:5000/api/v1/mobile/products - Retreives a list of products for mobile clients, scaled down in data size to enhance latency on mobiles.
+   GET http://localhost:5000/api/v1/mobile/products/?offset=20&&limit=10 - Applies offset and limit queries
    ```
 
 ## API Gateway Pattern
