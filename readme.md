@@ -18,7 +18,7 @@ Make sure you have `Node` installed, this project required `Node v22`.
 
 1. Clone the project with `git clone https://github.com/yosang/microservice-architecture-pattern`
 2. Install root project dependencies with `npm install`
-3. Install microservice dependencies with `npm build`
+3. Install microservice dependencies with `npm run build`
 4. Run all the services with `npm start`
 5. Test the API gateway endpoints from the browser:
    ```
@@ -26,7 +26,7 @@ Make sure you have `Node` installed, this project required `Node v22`.
    GET /api/v1/mobile/products - Routes request to Products Catalog BFF for mobile clients
    ```
 
-### API Gateway Pattern
+## API Gateway Pattern
 
 Infrastructure focused, no business logic, protects and serves the bff's with requests from clients.
 
@@ -45,7 +45,7 @@ Infrastructure focused, no business logic, protects and serves the bff's with re
 - GET /api/v1/web/products - Routes request to Products Catalog BFF for desktop clients
 - GET /api/v1/mobile/products - Routes request to Products Catalog BFF for mobile clients
 
-### Backend-for-frontends Pattern
+## Backend-for-frontends Pattern
 
 Business logic focused, adapts and transforms data from microservices to the frontend.
 
@@ -57,7 +57,7 @@ Business logic focused, adapts and transforms data from microservices to the fro
 - Hide backend service details.
 - Handle failures and implement error handling.
 
-#### Catalog Web BFF
+### Catalog Web BFF
 
 ##### Business Logic
 
@@ -68,7 +68,7 @@ Transforms and aggregates products, inventory and reviews data from microservice
 - GET /products - Returns a list of products tailored for desktop frontends.
 - GET /products/:id - Returns one product.
 
-#### Catalog Mobile BFF
+### Catalog Mobile BFF
 
 ##### Business Logic
 
@@ -85,7 +85,7 @@ Transforms and aggregates products, inventory and reviews data from microservice
 - In-memory caching
 - Compressed responses
 
-#### Microservices overview
+### Microservices overview
 
 Each service owns its data and rules.
 
