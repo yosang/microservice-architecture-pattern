@@ -1,9 +1,0 @@
-GET /search/?wireless+mouse
-
-{
-  "query": "wireless mouse",
-  "results": [
-    { "id": "sku-001", "name": "Wireless Mouse", "price": 29.99 }
-  ]
-}
-
